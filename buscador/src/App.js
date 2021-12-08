@@ -10,6 +10,8 @@ function App() {
 
   const [input, setInput] = useState('')
 
+  const [cep, setCep] = useState({})
+
   async function handleSearch(){
     // alert("Valor do Input " + input)
     //https://viacep.com.br/ws/01310930/json/
@@ -20,7 +22,9 @@ function App() {
     }
     try {
       const response = await api.get(`${input}/json`);
-      console.log(response.data)
+      // console.log(response.data)
+      setCep(response.data)
+      setInput('')
 
     } catch {
       alert("Ops erro ao buscar")
@@ -44,14 +48,16 @@ function App() {
             <FiSearch size={25} color="#fff"/>
         </button>
      </div>
+      {Object.keys(cep).length > 0 && (
+        <main className="main">
+          <h2>CEP: {cep.cep}</h2>
+          <span>  {cep.logradouro}</span>
+          <span> {cep.complemento}</span>
+          <span> {cep.bairro}</span>
+          <span> {cep.localidade}- {cep.uf}</span>
+        </main>
+      )}
 
-      <main className="main">
-          <h2>CEP: 79003222</h2>
-          <span> Rua Teste algum</span>
-          <span> Complemento: Algum complemento</span>
-          <span> Vila Rosa</span>
-          <span> Campo Grande - MS</span>
-      </main>
 
     </div>
   );
