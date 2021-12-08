@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import './styles.css';
+import api from './services/api';
+
+
+
+
 function App() {
 
   const [input, setInput] = useState('')
 
-  function handleSearch(){
+  async function handleSearch(){
     // alert("Valor do Input " + input)
     //https://viacep.com.br/ws/01310930/json/
 
@@ -14,9 +19,12 @@ function App() {
       return;
     }
     try {
-      
-    } catch (error) {
-      
+      const response = await api.get(`${input}/json`);
+      console.log(response.data)
+
+    } catch {
+      alert("Ops erro ao buscar")
+      setInput('')
     }
   }
 
